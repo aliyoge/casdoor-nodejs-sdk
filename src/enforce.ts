@@ -29,6 +29,7 @@ export class EnforceSDK {
   }
 
   public async enforce(
+    enforcerId: string,
     permissionId: string,
     modelId: string,
     resourceId: string,
@@ -36,6 +37,7 @@ export class EnforceSDK {
   ): Promise<boolean> {
     const response = await this.doEnforce<CasbinResponse>(
       'enforce',
+      enforcerId,
       permissionId,
       modelId,
       resourceId,
@@ -51,6 +53,7 @@ export class EnforceSDK {
   }
 
   public async batchEnforce(
+    enforcerId: string,
     permissionId: string,
     modelId: string,
     resourceId: string,
@@ -58,6 +61,7 @@ export class EnforceSDK {
   ): Promise<boolean[]> {
     const response = await this.doEnforce<CasbinResponse[]>(
       'batch-enforce',
+      enforcerId,
       permissionId,
       modelId,
       resourceId,
@@ -69,6 +73,7 @@ export class EnforceSDK {
 
   private async doEnforce<T>(
     action: string,
+    enforcerId: string,
     permissionId: string,
     modelId: string,
     resourceId: string,
@@ -81,6 +86,7 @@ export class EnforceSDK {
     const url = `/${action}`
     return (await this.request.post(url, casbinRequest, {
       params: {
+        enforcerId: enforcerId,
         permissionId: permissionId,
         modelId: modelId,
         resourceId: resourceId,
